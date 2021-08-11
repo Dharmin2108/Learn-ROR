@@ -5,7 +5,7 @@ import Container from "components/Container";
 import PageLoader from "components/PageLoader";
 import tasksApi from "apis/tasks";
 
-const ShowTask = () => {
+const ShowTask = ({ history }) => {
   const { slug } = useParams();
   const [taskDetails, setTaskDetails] = useState([]);
   const [pageLoading, setPageLoading] = useState(true);
