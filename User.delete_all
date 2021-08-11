@@ -1,0 +1,5 @@
+$ bundle exec rails console
+>> User.delete_all
+User.all
+exit
+
