@@ -8,6 +8,7 @@ import Dashboard from "./components/Dashboard";
 import CreateTask from "./components/Tasks/CreateTask";
 import ShowTask from "components/Tasks/ShowTask";
 import EditTask from "components/Tasks/EditTask";
+import Signup from "./components/Authentication/Signup";
 
 const App = () => {
   const [loading, setLoading] = useState(true);
@@ -24,6 +25,7 @@ const App = () => {
     <Router>
       <ToastContainer />
       <Switch>
+        <Route exact path="/signup" component={Signup} />
         <Route exact path="/" component={Dashboard} />
         {/*<Route exact path="/about" render={() => <div>About</div>} /> */}
         <Route exact path="/tasks/:slug/edit" component={EditTask} />
