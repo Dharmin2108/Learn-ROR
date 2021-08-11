@@ -1,6 +1,13 @@
 # frozen_string_literal: true
 
 class TasksController < ApplicationController
+  def show
+    task = Task.find_by_slug!(params[:slug])
+    render status: :ok, json: { task: task }
+  rescue ActiveRecord::RecordNotFound => errors
+    render json: { errors: errors }, status: :not_found
+  end
+
   def index
     tasks = Task.all
     render status: :ok, json: { tasks: tasks }

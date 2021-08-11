@@ -3,8 +3,8 @@ import { isNil, isEmpty, either } from "ramda";
 
 import Container from "components/Container";
 import Table from "components/Tasks/Table";
-import PageLoader from "components/PageLoader";
 import tasksApi from "apis/tasks";
+import PageLoader from "components/PageLoader";
 
 const Dashboard = ({ history }) => {
   const [tasks, setTasks] = useState([]);
@@ -19,6 +19,10 @@ const Dashboard = ({ history }) => {
       logger.error(error);
       setLoading(false);
     }
+  };
+
+  const showTask = slug => {
+    history.push(`/tasks/${slug}/show`);
   };
 
   useEffect(() => {
@@ -45,7 +49,7 @@ const Dashboard = ({ history }) => {
 
   return (
     <Container>
-      <Table data={tasks} />
+      <Table data={tasks} showTask={showTask} />
     </Container>
   );
 };
