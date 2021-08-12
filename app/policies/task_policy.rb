@@ -24,7 +24,7 @@ class TaskPolicy
 
   # Only creator is allowed to update a task.
   def update?
-    task.creator_id == user.id
+    show?
   end
 
   # Every user can create a task, hence create? will always returns true.
