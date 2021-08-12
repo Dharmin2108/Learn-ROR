@@ -9,10 +9,13 @@ class TasksController < ApplicationController
 
   def index
     tasks = policy_scope(Task)
-    pending_tasks = tasks.pending
-    completed_tasks = tasks.completed
     render status: :ok, json: {
-      tasks: { pending: pending_tasks, completed: completed_tasks }
+      tasks: {
+        pending: tasks.inorder_of(:pending).as_json(
+          include: { user: { only: %i[name id] } }
+        ),
+        completed: tasks.inorder_of(:completed)
+      }
     }
   end
 
@@ -61,7 +64,7 @@ class TasksController < ApplicationController
   private
 
     def task_params
-      params.require(:task).permit(:title, :user_id, :progress)
+      params.require(:task).permit(:title, :user_id, :progress, :status)
     end
 
     def ensure_authorized_update_to_restricted_attrs

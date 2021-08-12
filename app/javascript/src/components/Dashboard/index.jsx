@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { all, isNil, isEmpty, either } from "ramda";
+
 import tasksApi from "apis/tasks";
 import Container from "components/Container";
 import PageLoader from "components/PageLoader";
 import Table from "components/Tasks/Table/index";
 
 const Dashboard = ({ history }) => {
-  const [tasks, setTasks] = useState([]);
   const [pendingTasks, setPendingTasks] = useState([]);
   const [completedTasks, setCompletedTasks] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -23,6 +23,15 @@ const Dashboard = ({ history }) => {
     }
   };
 
+  const handleProgressToggle = async ({ slug, progress }) => {
+    try {
+      await tasksApi.update({ slug, payload: { task: { progress } } });
+      await fetchTasks();
+    } catch (error) {
+      logger.error(error);
+    }
+  };
+
   const destroyTask = async slug => {
     try {
       await tasksApi.destroy(slug);
@@ -32,19 +41,21 @@ const Dashboard = ({ history }) => {
     }
   };
 
-  const handleProgressToggle = async ({ slug, progress }) => {
+  const showTask = slug => {
+    history.push(`/tasks/${slug}/show`);
+  };
+
+  const starTask = async (slug, status) => {
     try {
-      await tasksApi.update({ slug, payload: { task: { progress } } });
+      const toggledStatus = status === "starred" ? "unstarred" : "starred";
+      await tasksApi.update({
+        slug,
+        payload: { task: { status: toggledStatus } }
+      });
       await fetchTasks();
     } catch (error) {
       logger.error(error);
-    } finally {
-      setLoading(false);
     }
-  };
-
-  const showTask = slug => {
-    history.push(`/tasks/${slug}/show`);
   };
 
   useEffect(() => {
@@ -77,6 +88,7 @@ const Dashboard = ({ history }) => {
           destroyTask={destroyTask}
           showTask={showTask}
           handleProgressToggle={handleProgressToggle}
+          starTask={starTask}
         />
       )}
       {!either(isNil, isEmpty)(completedTasks) && (
