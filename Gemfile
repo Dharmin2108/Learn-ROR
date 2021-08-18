@@ -69,3 +69,6 @@ gem "simplecov", require: false, group: :test
 
 gem "pundit"
 
+gem "bundler-audit", require: false
+gem "ruby_audit", require: false
+

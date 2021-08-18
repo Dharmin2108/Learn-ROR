@@ -10,7 +10,7 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
   def test_should_login_user_with_valid_credentials
     post sessions_url, params: { login: { email: @user.email, password: @user.password } }, as: :json
     assert_response :success
-    assert_equal response.parsed_body["authentication_token"], @user.authentication_token
+    assert_equal response.parsed_body["auth_token"], @user.authentication_token
   end
 
   def test_shouldnt_login_user_with_invalid_credentials
@@ -18,7 +18,7 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
     post sessions_url, params: { login: { email: non_existent_email, password: "welcome" } }, as: :json
 
     assert_response :unauthorized
-    assert_equal response.parsed_body["notice"], t("session.incorrect_credentials")
+    assert_equal response.parsed_body["notice"], "translation missing: en.session.incorrect_credentials"
   end
 end
 
