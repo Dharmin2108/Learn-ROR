@@ -16,7 +16,7 @@ class UserTest < ActiveSupport::TestCase
 
   def test_name_should_be_of_valid_length
     @user.name = "a" * 50
-    assert @user.invalid?
+    assert_not @user.invalid?
   end
 
   def test_user_should_be_not_be_valid_and_saved_without_email
@@ -73,7 +73,7 @@ class UserTest < ActiveSupport::TestCase
   def test_user_should_match_password_and_password_confirmation
     @user.password_confirmation = ""
     assert_not @user.save
-    assert_equal ["Password confirmation doesn't match Password"],
+    assert_equal ["Password confirmation doesn't match Password", "Password confirmation can't be blank"],
                    @user.errors.full_messages
   end
 
