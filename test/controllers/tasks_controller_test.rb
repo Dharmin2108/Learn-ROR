@@ -36,7 +36,7 @@ class TasksControllerTest < ActionDispatch::IntegrationTest
     delete slug_url, headers: @assignee_headers
     assert_response :forbidden
     response_json = response.parsed_body
-    assert_equal response_json["error"], t("authorization.denied")
+    assert_equal response_json["error"], "Permission Denied"
   end
 
   def test_assignee_shouldnt_update_restricted_task_fields
