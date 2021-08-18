@@ -18,16 +18,14 @@ jobs:
 
     steps:
       - checkout
-      - run: gem install bundler:2.2.20
+      - run: gem install bundler:2.2.15
       #install sqlite dependency
       - run: sudo apt update && sudo apt install zlib1g-dev libsqlite3-dev
       # Bundle install
-      - run:
-          bundle check --path=vendor/bundle || bundle install
+      - run: bundle check --path=vendor/bundle || bundle install
           --path=vendor/bundle --jobs=4 --retry=3
       # Yarn install
-      - run:
-          chmod a+x ./bin/yarn && ./bin/yarn install --cache-folder
+      - run: chmod a+x ./bin/yarn && ./bin/yarn install --cache-folder
           vendor/node_modules
       # Ensure Rubocop has linted all Ruby files
       - run: bundle exec rubocop
