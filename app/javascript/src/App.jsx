@@ -13,6 +13,7 @@ import Signup from "components/Authentication/Signup";
 import PrivateRoute from "components/Common/PrivateRoute";
 import { getFromLocalStorage } from "helpers/storage";
 import PageLoader from "components/PageLoader";
+import MyPreferences from "./components/MyPreferences";
 
 const App = () => {
   const [loading, setLoading] = useState(true);
@@ -48,6 +49,7 @@ const App = () => {
           condition={isLoggedIn}
           component={Dashboard}
         />
+        <Route exact path="/my/preferences" component={MyPreferences} />
       </Switch>
     </Router>
   );

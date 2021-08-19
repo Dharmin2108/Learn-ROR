@@ -25,6 +25,8 @@ module Granite
     end
 
     config.active_job.queue_adapter = :sidekiq
+
+    Redis.exists_returns_integer = false
   end
 end
 
